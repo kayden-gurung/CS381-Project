@@ -33,7 +33,8 @@ classes of prompt injection attacks, then implement and evaluate defensive count
 > Full setup instructions will be added in Week 2 once the development environment is finalized.
 
 ## Team
-- [Your Name] — UMKC CS381
+Diddylabs — UMKC CS381
+Kayden G, Dylan N, Zach G
 
 ## Ethics & Safety
 All attack demonstrations are conducted exclusively against systems we own and operate.
