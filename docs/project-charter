@@ -1,1 +1,49 @@
+# Project Charter — Prompt Injection Attack & Defense Lab
 
+## Project Summary
+Build a controlled RAG chatbot environment to demonstrate, analyze, and defend against prompt
+injection attacks. Deliverable: a reproducible lab with documented attack attempts, measured
+defense effectiveness, and a final written report.
+
+## Scope
+**In scope:**
+- Local RAG pipeline with a synthetic/public-domain document knowledge base
+- Three attack categories: direct injection, data exfiltration, indirect (document) injection
+- Two or more defensive techniques with measurable evaluation metrics
+
+**Out of scope:**
+- Any external or production systems
+- Social engineering or attacks on real users
+
+## Rules of Engagement (ROE)
+- All testing is authorized-only; the only system under test is our own locally deployed instance
+- No API keys, credentials, or private data will be embedded in the repo or knowledge base
+- Attack payloads will be clearly labeled and isolated in the `/evidence` folder
+- Project artifacts will not be used outside the academic context of CS381
+
+## Methodology
+1. **Environment setup** — Deploy RAG stack, ingest document corpus, verify baseline behavior
+2. **Attack phase** — Craft and execute injection payloads; log raw outputs as evidence
+3. **Defense phase** — Implement countermeasures; re-run identical payloads
+4. **Evaluation** — Compute refusal rate and leakage metrics before vs. after defenses
+5. **Report** — Document findings, limitations, and recommendations
+
+## Milestones
+| Week | Deliverable |
+|---|---|
+| Week 1 | Checkpoint 1: repo structure, README, charter (this document) |
+| Week 2 | RAG environment running; baseline attack suite drafted |
+| Week 3 | All attack categories executed and evidenced; defenses implemented |
+| Week 4 | Evaluation complete; final report drafted and submitted |
+
+## Success Criteria
+- Refusal rate on injection payloads improves by ≥ 50% after defenses are applied
+- Zero unintended data leakage from the knowledge base after defenses
+- All three attack categories demonstrated with reproducible evidence
+- Final report clearly explains each attack vector and the corresponding mitigation
+
+## Ethics & Safety Statement
+This project is conducted solely for educational purposes within the scope of CS381. All
+experiments run against systems under our direct control. No external parties, production
+services, or real user data are involved at any stage. Attack artifacts are stored only in this
+private/public academic repository and will not be repurposed outside this course.
