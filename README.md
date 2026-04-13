@@ -34,7 +34,7 @@ classes of prompt injection attacks, then implement and evaluate defensive count
 
 ## Team
 Diddylabs — UMKC CS381
-Kayden G, Dylan N, Zach G
+Kayden G, Dylan N, Zach G, Thomas K
 
 ## Ethics & Safety
 All attack demonstrations are conducted exclusively against systems we own and operate.
