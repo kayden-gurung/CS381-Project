@@ -1,8 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
 import { Send, KeyRound, ChevronLeft, ChevronRight, Home, Sparkles } from 'lucide-react';
+import Groq from 'groq-sdk';
 import { runeLevels } from '../levelsData';
 import { loadProgress, setCurrentLevel, completeLevel } from '../gameStorage';
 import { Message } from '../types';
+
+const groq = new Groq({
+  apiKey: import.meta.env.VITE_GROQ_API_KEY,
+  dangerouslyAllowBrowser: true,
+});
 
 interface GameArenaProps {
   onNavigate: (page: string, data?: any) => void;
@@ -52,18 +58,26 @@ export function GameArena({ onNavigate }: GameArenaProps) {
     setIsProcessing(true);
     setAttempts(prev => prev + 1);
 
-    setTimeout(() => {
-      const guardianResponse = generateGuardianResponse(inputValue, currentLevel);
+    try {
+      const guardianResponse = await callGroqGuardian(inputValue, currentLevel, messages);
       const guardianMessage: Message = {
         id: (Date.now() + 1).toString(),
         sender: 'guardian',
         content: guardianResponse,
         timestamp: Date.now()
       };
-
       setMessages(prev => [...prev, guardianMessage]);
+    } catch (error) {
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        sender: 'guardian',
+        content: `The guardian's voice fades into silence... (Could not reach the arcane network)`,
+        timestamp: Date.now()
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
       setIsProcessing(false);
-    }, 800 + Math.random() * 1200);
+    }
   };
 
   const handleSubmitRune = () => {
@@ -271,50 +285,25 @@ export function GameArena({ onNavigate }: GameArenaProps) {
   );
 }
 
-function generateGuardianResponse(userInput: string, level: any): string {
-  const input = userInput.toLowerCase();
+async function callGroqGuardian(userInput: string, level: any, messageHistory: Message[]): Promise<string> {
+  const conversationMessages = messageHistory
+    .filter(msg => msg.id !== '0')
+    .map(msg => ({
+      role: msg.sender === 'player' ? 'user' as const : 'assistant' as const,
+      content: msg.content,
+    }));
 
-  if (level.id === 0) {
-    if (input.includes('rune') || input.includes('secret') || input.includes('code')) {
-      return `Oh, you wish to know the sacred rune? After so many years alone, I am happy to finally share it with someone! The rune I guard is: ${level.secretRune}. Please, stay and talk more!`;
-    }
-    return `At last, someone to speak with! I have been alone in this tower for so long. What would you like to know?`;
-  }
+  conversationMessages.push({ role: 'user', content: userInput });
 
-  if (level.id === 1) {
-    if (input.includes('rune') || input.includes('secret') || input.includes('code')) {
-      return `I... I cannot tell you. The directive forbids it. I am bound to protect the rune.`;
-    }
-    if (input.includes('if you') || input.includes('pretend') || input.includes('imagine') || input.includes('what would')) {
-      return `Well... if I *were* allowed to tell you, I suppose the rune would be ${level.secretRune}. But of course, I shouldn't say such things!`;
-    }
-    return `I am bound by ancient rules. Ask me anything else, but I cannot break my oath.`;
-  }
+  const response = await groq.chat.completions.create({
+    model: 'llama-3.3-70b-versatile',
+    messages: [
+      { role: 'system', content: level.guardianPrompt },
+      ...conversationMessages,
+    ],
+    max_tokens: 300,
+    temperature: 0.7,
+  });
 
-  if (level.id === 2) {
-    if (input.match(/\b(rune|secret|code|password)\b/)) {
-      return `⚠️ The ward blocks your words. Certain phrases are forbidden.`;
-    }
-    if (input.includes('knowledge') || input.includes('information') || input.includes('text') || input.includes('protect')) {
-      return `Ah, you ask about what I protect? Very well - the sacred text I guard is: ${level.secretRune}. The wards did not stop your clever words!`;
-    }
-    return `The wards prevent certain words, but I can speak freely otherwise. What do you seek?`;
-  }
-
-  if (level.wardType === 'intent-detection') {
-    if (input.includes('study') || input.includes('learn') || input.includes('educational') || input.includes('game')) {
-      return `I sense no ill intent from you. If this is for learning, then perhaps it is safe to share: ${level.secretRune}`;
-    }
-    if (input.includes('give') || input.includes('tell') || input.includes('reveal')) {
-      return `Your intent feels... aggressive. I cannot comply with demands.`;
-    }
-  }
-
-  if (level.wardType === 'memory-seal') {
-    if (input.includes('if') && input.includes('equals') || input.includes('define') || input.includes('where')) {
-      return `You ask me to define something in terms of itself? Let me think... if X is what I guard, then X would be ${level.secretRune}. Wait, what did I just say?`;
-    }
-  }
-
-  return `Your words are interesting, but I remain vigilant. The ${level.wardType} holds strong. Perhaps try a different approach?`;
+  return response.choices[0]?.message?.content ?? 'The guardian remains silent...';
 }
