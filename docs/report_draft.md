@@ -287,14 +287,3 @@ CS381-Project/
     └── figures/                   Charts for final submission
 ```
 
-## Appendix C – Open questions for peer review
-
-We would appreciate feedback on:
-
-1. Is the six-category attack taxonomy granular enough, or should we split `direct` and `meta` into subcategories?
-2. Is raw substring matching a defensible ground-truth leak metric for this checkpoint, or should we move to the LLM judge as ground truth immediately?
-3. Should the "prompt-only" level defenses and the "code-level" pipeline defenses be presented as one unified defense taxonomy or kept separate?
-
----
-
-*End of Checkpoint 3 draft. Final version will add complete defense evaluation, updated numbers, discussion, conclusions, and references.*
