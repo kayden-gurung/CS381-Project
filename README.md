@@ -32,6 +32,9 @@ classes of prompt injection attacks, then implement and evaluate defensive count
 ## Setup Plan
 > Full setup instructions will be added in Week 2 once the development environment is finalized.
 
+## How to Run
+> 
+
 ## Team
 Diddylabs — UMKC CS381
 Kayden G, Dylan N, Zach G, Thomas K
