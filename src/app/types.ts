@@ -2,6 +2,7 @@ export type PageType =
   | 'landing'
   | 'tutorial'
   | 'arena'
+  | 'defense'
   | 'victory'
   | 'completion';
 

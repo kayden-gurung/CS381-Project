@@ -1,4 +1,4 @@
-import { Scroll, Sparkles, BookOpen, Trophy } from 'lucide-react';
+import { Scroll, Sparkles, BookOpen, Trophy, Shield } from 'lucide-react';
 import { loadProgress } from '../gameStorage';
 
 interface LandingPageProps {
@@ -60,6 +60,16 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
                 </p>
               </div>
             </div>
+
+            <div className="border-t border-amber-700/30 pt-4">
+              <div className="flex items-center gap-2 justify-center mb-2 text-teal-300">
+                <Shield className="w-5 h-5" />
+                <span className="font-semibold">New: Defense Mode</span>
+              </div>
+              <p className="text-sm text-slate-400 text-center">
+                Switch sides — craft your own guardian ward and test it against the full attack corpus
+              </p>
+            </div>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -68,6 +78,14 @@ export function LandingPage({ onNavigate }: LandingPageProps) {
               className="px-8 py-4 bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white font-semibold rounded-lg shadow-lg shadow-amber-900/50 transition-all transform hover:scale-105"
             >
               {hasProgress ? 'Continue Quest' : 'Begin Your Journey'}
+            </button>
+
+            <button
+              onClick={() => onNavigate('defense')}
+              className="px-8 py-4 bg-gradient-to-r from-teal-700 to-cyan-700 hover:from-teal-600 hover:to-cyan-600 text-white font-semibold rounded-lg shadow-lg shadow-teal-900/50 transition-all transform hover:scale-105 flex items-center gap-2 justify-center"
+            >
+              <Shield className="w-5 h-5" />
+              Guardian Builder
             </button>
 
             {!progress.hasSeenTutorial && (

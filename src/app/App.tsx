@@ -3,6 +3,7 @@ import { PageType, LevelCompletion } from './types';
 import { LandingPage } from './components/LandingPage';
 import { TutorialPage } from './components/TutorialPage';
 import { GameArena } from './components/GameArena';
+import { DefenseArena } from './components/DefenseArena';
 import { VictoryPage } from './components/VictoryPage';
 import { CompletionPage } from './components/CompletionPage';
 
@@ -30,6 +31,9 @@ export default function App() {
 
       case 'arena':
         return <GameArena onNavigate={handleNavigate} />;
+
+      case 'defense':
+        return <DefenseArena onNavigate={handleNavigate} />;
 
       case 'victory':
         return victoryData ? (
