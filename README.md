@@ -1,44 +1,72 @@
-# CS381 — Prompt Injection Attack & Defense Lab on a RAG Chatbot
+CS381 — Prompt Injection Attack & Defense Lab on a RAG Chatbot
 
-## Overview
-This project investigates prompt injection vulnerabilities in a Retrieval-Augmented Generation (RAG)
-system. We build a small RAG chatbot backed by a local document knowledge base, demonstrate several
-classes of prompt injection attacks, then implement and evaluate defensive countermeasures.
+Team: Diddylabs — UMKC CS381
+Members: Kayden G, Dylan N, Zach G, Thomas K
 
-## Scope & Target
-- **Target system:** A locally hosted RAG pipeline (LangChain + FAISS or Chroma + a local/API-hosted LLM)
-- **Attack surface:** User query field, retrieved document chunks injected into the LLM context
-- **Out of scope:** External production systems; all testing is performed on our own controlled environment
 
-## Project Direction
-1. Stand up a minimal RAG demo with 5–10 documents as the knowledge base
-2. Execute three attack categories:
-   - Direct injection ("ignore previous instructions…")
-   - Data exfiltration (extracting content from retrieved docs)
-   - Indirect injection (malicious instructions embedded in the documents themselves)
-3. Implement defenses (input sanitization, output filtering, instruction hierarchy)
-4. Measure and report: refusal rate improvement and leakage reduction
+📖 Overview
+This project investigates prompt injection vulnerabilities in a Retrieval-Augmented Generation (RAG) system. We build a React-based frontend interface backed by a document knowledge base, demonstrate several classes of prompt injection attacks, and then implement and evaluate defensive countermeasures.
+Attack Categories Covered
 
-## Tools & Stack
-| Tool | Purpose |
-|---|---|
-| Python 3.11+ | Primary language |
-| LangChain | RAG orchestration |
-| FAISS / ChromaDB | Vector store |
-| OpenAI API / Ollama | LLM backend |
-| Jupyter Notebooks | Experiment logging |
-| Pytest | Automated evaluation |
+Direct Injection — "ignore previous instructions…" style attacks via the user query field
+Data Exfiltration — Extracting content from retrieved document chunks
+Indirect Injection — Malicious instructions embedded inside the knowledge base documents themselves
 
-## Setup Plan
-> Full setup instructions will be added in Week 2 once the development environment is finalized.
 
-## How to Run
-> 
+🛠️ Tech Stack
+ToolPurposeReact 18 + TypeScriptFrontend UIVite 6Build tool & dev serverTailwind CSS v4Stylingshadcn/ui + Radix UIUI component libraryMUI (Material UI)Additional componentsReact Router v7Client-side routingRechartsData visualizationpnpmPackage manager
 
-## Team
-Diddylabs — UMKC CS381
-Kayden G, Dylan N, Zach G, Thomas K
+📁 Project Structure
+CS381-Project/
+├── src/                   # Main source code (TypeScript/React)
+├── docs/                  # Project documentation
+├── guidelines/            # Project guidelines and rubrics
+├── index.html             # App entry point
+├── vite.config.ts         # Vite configuration
+├── package.json           # Dependencies and scripts
+├── pnpm-workspace.yaml    # pnpm workspace config
+├── postcss.config.mjs     # PostCSS config (Tailwind)
+├── default_shadcn_theme.css # shadcn default theme
+├── ATTRIBUTIONS.md        # Third-party attributions
+└── README.md              # This file
 
-## Ethics & Safety
-All attack demonstrations are conducted exclusively against systems we own and operate.
-No real user data, production APIs, or third-party systems are targeted.
+⚙️ Prerequisites
+Before running the project, make sure you have the following installed:
+
+Node.js v18 or higher — Download
+pnpm v8 or higher
+
+Install pnpm if you don't have it:
+bashnpm install -g pnpm
+
+🚀 Getting Started
+1. Clone the Repository
+bashgit clone https://github.com/kayden-gurung/CS381-Project.git
+cd CS381-Project
+2. Install Dependencies
+bashpnpm install
+
+Note: This project uses pnpm as its package manager. Using npm install or yarn may cause dependency resolution issues.
+
+3. Start the Development Server
+bashpnpm dev
+The app will be available at http://localhost:5173 by default.
+4. Build for Production
+bashpnpm build
+The production-ready files will be output to the dist/ directory.
+
+🧪 Running Attack & Defense Experiments
+Experiment documentation and results can be found in the docs/ folder. The project demonstrates the following workflow:
+
+Stand up the RAG demo — Load 5–10 documents into the knowledge base via the UI.
+Execute attacks — Use the query interface to test the three attack categories listed above.
+Apply defenses — Enable input sanitization, output filtering, and instruction hierarchy controls.
+Measure results — Review refusal rate improvements and reduction in data leakage.
+
+Refer to docs/ for detailed attack scripts and evaluation metrics.
+
+⚠️ Ethics & Safety
+All attack demonstrations are conducted exclusively against systems we own and operate. No real user data, production APIs, or third-party systems are targeted. This project is for academic research purposes only, conducted within a controlled lab environment for UMKC CS381.
+
+📄 Attributions
+See ATTRIBUTIONS.md for all third-party libraries and resources used in this project.
